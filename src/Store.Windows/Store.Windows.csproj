@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AssemblyName>JirkaStore</AssemblyName>
+    <Version>1.0.0</Version>
+    <ApplicationIcon>../../assets/store.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../Store.Core/Store.Core.csproj" />
+    <Compile Include="../../shared/WorkflowStyle.cs" Link="WorkflowStyle.cs" />
+    <EmbeddedResource Include="../../assets/store.ico" LogicalName="Store.Icon" />
+    <Content Include="../../catalog/catalog.json" Link="catalog/catalog.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>

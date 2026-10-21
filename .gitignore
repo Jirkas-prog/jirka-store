@@ -1,0 +1,13 @@
+**/bin/
+**/obj/
+dist/
+packages/
+local/
+*.user
+*.keystore
+*.jks
+*.pfx
+*.apk
+*.zip
+.vs/
+__pycache__/

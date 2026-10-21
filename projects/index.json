@@ -1,0 +1,19 @@
+{
+  "organization": "Jirkas-prog",
+  "model": "one-repository-per-project",
+  "launcherRepository": "jirka-store",
+  "groups": {
+    "pc": [{"id":"wifi-scope","repository":null,"status":"local"}],
+    "android": [
+      {"id":"zephyr-termux","repository":"Jirkas-prog/termux-zephyr-android","status":"released"},
+      {"id":"freecad-android","repository":"Jirkas-prog/freecad-android","status":"alpha"}
+    ],
+    "esp32": [
+      {"id":"esp32-s3-ukoly","repository":"Jirkas-prog/live-esp32-dev","status":"repository-not-publicly-readable"},
+      {"id":"esp-termostat","repository":null,"status":"local"},
+      {"id":"vanocni-svetylka","repository":null,"status":"local"}
+    ],
+    "homeassistant": [{"id":"home-assistant-addons","repository":"Jirkas-prog/home-assistant-addons","apps":["mybrowser-ha","fakturocel-ha"],"status":"released"}],
+    "web": [{"id":"freecad-fusion","repository":"Jirkas-prog/freecad-fusion","status":"existing"}]
+  }
+}
