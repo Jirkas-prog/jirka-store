@@ -105,10 +105,10 @@
       "name": "Jirka Store pro Windows",
       "category": "pc",
       "description": "Stažení a ruční aktualizace samotného obchodu. Rozbalte nové vydání vedle starého a spusťte jeho EXE; knihovna aplikací zůstává v uživatelském profilu.",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "kind": "link",
       "repository": "https://github.com/Jirkas-prog/jirka-store",
-      "installUrl": "https://github.com/Jirkas-prog/jirka-store/releases/tag/v1.0.0"
+      "installUrl": "https://github.com/Jirkas-prog/jirka-store/releases/tag/v1.1.0"
     }
   ]
 }

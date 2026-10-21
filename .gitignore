@@ -11,3 +11,4 @@ local/
 *.zip
 .vs/
 __pycache__/
+**/target/

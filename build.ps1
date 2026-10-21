@@ -8,8 +8,20 @@ $ErrorActionPreference = 'Stop'
 Set-Location -LiteralPath $PSScriptRoot
 dotnet run --project 'tests\Store.Checks' -c Release -- 'catalog\catalog.json'
 if ($LASTEXITCODE) { throw 'Testy selhaly.' }
-dotnet publish 'src\Store.Windows\Store.Windows.csproj' -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:EnableCompressionInSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -o 'dist\windows' --nologo
-if ($LASTEXITCODE) { throw 'Sestavení Windows selhalo.' }
+if (Test-Path -LiteralPath 'local\toolchain\cargo\bin\cargo.exe') {
+    $env:CARGO_HOME = Join-Path $PSScriptRoot 'local\toolchain\cargo'
+    $env:RUSTUP_HOME = Join-Path $PSScriptRoot 'local\toolchain\rustup'
+    $env:PATH = "$env:CARGO_HOME\bin;$env:PATH"
+}
+cargo build --manifest-path 'launcher\Cargo.toml' -p jirka-launcher --release --locked
+if ($LASTEXITCODE) { throw 'Sestavení Rust launcheru selhalo.' }
+New-Item -ItemType Directory -Path 'dist\windows\catalog','dist\windows\licenses' -Force | Out-Null
+Copy-Item -LiteralPath 'launcher\target\release\JirkaStore.exe' -Destination 'dist\windows\JirkaStore.exe'
+Copy-Item -LiteralPath 'catalog\catalog.json' -Destination 'dist\windows\catalog\catalog.json'
+dotnet publish 'src\Store.Host\Store.Host.csproj' -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:EnableCompressionInSingleFile=true -o 'dist\windows\engine' --nologo
+if ($LASTEXITCODE) { throw 'Sestavení instalační služby selhalo.' }
+Copy-Item -LiteralPath 'launcher\LICENSE-MIT','launcher\LICENSE-APACHE','launcher\NOTICE','launcher\ATTRIBUTION.md','launcher\FORK.md' -Destination 'dist\windows\licenses'
+Get-ChildItem -LiteralPath 'launcher\assets\fonts' -Filter 'OFL-*.txt' | ForEach-Object { Copy-Item -LiteralPath $_.FullName -Destination 'dist\windows\licenses' }
 if ($UseLocalCatalog) {
     $localCatalog = Join-Path $PSScriptRoot 'local\catalog.local.json'
     if (!(Test-Path -LiteralPath $localCatalog)) { throw 'Nejdřív vytvořte lokální balíček pomocí tools/Package-Windows.ps1.' }
