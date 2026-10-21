@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "apps": [
+    {
+      "id": "wifi-scope", "name": "WiFi Scope", "category": "pc", "version": "1.1.0", "kind": "draft",
+      "description": "Vaše Windows diagnostika Wi-Fi: okolní sítě, síla signálu, síťová komunikace a diagnostika adaptéru."
+    },
+    {
+      "id": "zephyr-termux", "name": "Zephyr pro Android", "category": "android", "version": "1.0.2", "kind": "apk",
+      "description": "Vaše vývojové prostředí Zephyr přes Termux. Pro Android bez rootu; prostředí vyžaduje alespoň 12 GiB volného místa. Vlastní instalaci prostředí dokončíte v aplikaci.",
+      "packageName": "cz.zephyr.termux", "versionCode": 10002,
+      "repository": "https://github.com/Jirkas-prog/termux-zephyr-android",
+      "url": "https://github.com/Jirkas-prog/termux-zephyr-android/releases/download/v1.0.2/zephyr-termux.apk",
+      "sha256": "637bcc05d72a32ae97312f49a5aee1f793e3b7f7d0628cf820722627ab8a7304"
+    },
+    {
+      "id": "freecad-android", "name": "FreeCAD FusionFlow · alpha", "category": "android", "version": "0.1.0", "kind": "apk",
+      "description": "Vaše experimentální Android aplikace FreeCAD FusionFlow. Vydání 0.1.0-alpha.1, Android 10 a novější. Balíček má přibližně 150 MB.",
+      "packageName": "org.freecad.fusionflow", "versionCode": 1,
+      "repository": "https://github.com/Jirkas-prog/freecad-android",
+      "url": "https://github.com/Jirkas-prog/freecad-android/releases/download/v0.1.0-alpha.1/FreeCAD-FusionFlow.apk",
+      "sha256": "2452c0b3790b05f280b3a08751cc1d4c92e4983e569fb0d972a855e0d70a3bc2"
+    },
+    {
+      "id": "mybrowser-ha", "name": "MyBrowser", "category": "homeassistant", "version": "0.8.1", "kind": "ha-addon",
+      "description": "Váš prohlížeč Brave, webová knihovna, offline archiv a hosting projektů v Home Assistant OS. Po přidání repozitáře vyberte MyBrowser. Verzi a dostupné aktualizace ověřuje Home Assistant.",
+      "repository": "https://github.com/Jirkas-prog/home-assistant-addons"
+    },
+    {
+      "id": "fakturocel-ha", "name": "Fakturocel", "category": "homeassistant", "version": "3.8.0", "kind": "ha-addon",
+      "description": "Vaše fakturace, editor šablon a zálohování v Home Assistant OS. Po přidání repozitáře vyberte Fakturocel. Verzi a dostupné aktualizace ověřuje Home Assistant.",
+      "repository": "https://github.com/Jirkas-prog/home-assistant-addons"
+    },
+    {
+      "id": "esphome-installer", "name": "ESPHome Web · instalační nástroj", "category": "esp32", "version": "0.0.0", "kind": "esp-web",
+      "description": "Externí oficiální nástroj ESPHome pro instalaci a aktualizaci kompatibilních ESP32 přes USB. Obecný nástroj; firmware vašich projektů se přidává samostatně.",
+      "repository": "https://github.com/esphome/esp-web-tools", "installUrl": "https://web.esphome.io/"
+    },
+    {
+      "id": "esp32-s3-ukoly", "name": "ESP32-S3 Úkoly", "category": "esp32", "version": "0.0.0", "kind": "draft",
+      "description": "Váš projekt ESP32-S3. Pro vydání je potřeba určit desku, sestavit firmware a připojit jeho instalační stránku."
+    },
+    {
+      "id": "esp-termostat", "name": "ESP termostat", "category": "esp32", "version": "0.0.0", "kind": "draft",
+      "description": "Váš termostat. Firmware a přesná hardwarová varianta zatím nejsou vydané v katalogu."
+    },
+    {
+      "id": "vanocni-svetylka", "name": "Vánoční světýlka", "category": "esp32", "version": "0.0.0", "kind": "draft",
+      "description": "Váš PlatformIO projekt. Instalační firmware pro konkrétní desku ještě není připojený."
+    }
+  ]
+}
