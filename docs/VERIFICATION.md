@@ -10,3 +10,5 @@
 Na počítači nebyl připojený Android telefon ani spuštěný emulátor (`adb devices` bez zařízení). Interakce se systémovým Android instalátorem tedy zatím nebyla vyzkoušena na zařízení. Nebyla provedena instalace firmwaru do fyzického ESP32 ani změna v Home Assistantu. Odkazy delegují tyto kroky na odpovídající nativní nástroje.
 
 Centrální veřejný repozitář je `Jirkas-prog/jirka-store`. Ostatní projekty zůstávají ve vlastních repozitářích; součástí veřejného vydání launcheru jsou pouze jeho EXE, APK a katalog. Lokální balíček WiFi Scope zůstává pouze lokální.
+
+Publikováno [zkušební vydání 1.0.0](https://github.com/Jirkas-prog/jirka-store/releases/tag/v1.0.0). Veřejný katalog byl načten bez autentizace skutečným klientem a prošel validací. SHA-256 obou balíčků vrácené GitHub Releases souhlasí s lokálními soubory. První [GitHub Actions sestavení a regresní kontroly](https://github.com/Jirkas-prog/jirka-store/actions/runs/39646457704) skončily úspěšně.
