@@ -1,12 +1,15 @@
 # Jirka Store
 
-Společný katalog vlastních projektů a dva nativní launchery: **Windows 10/11 x64** a **Android 9+**. Samostatný Git repozitář pro obchod; jednotlivé aplikace mají vlastní repozitáře a vydání. [Stáhnout launchery](https://github.com/Jirkas-prog/jirka-store/releases/tag/v1.0.0).
+Společný katalog vlastních projektů pro **Windows 10/11 x64** a **Android 9+**. Windows launcher od verze **1.1.0 přímo používá zdrojový kód ArtCraft Launcheru** (Rust/egui): jeho fonty, barevná témata, ovládací prvky a upravené karty a tabulku. Zdrojový fork je ve složce `launcher/`; přesný původ popisuje [FORK.md](launcher/FORK.md).
+
+[Windows 1.1.0](https://github.com/Jirkas-prog/jirka-store/releases/tag/v1.1.0) · [Android 1.0.0](https://github.com/Jirkas-prog/jirka-store/releases/tag/v1.0.0). Vydání 1.1.0 mění Windows launcher; Android balíček zůstává samostatný.
 
 ## Spuštění
 
-- Windows: z Releases stáhněte a rozbalte `JirkaStore-Windows-1.0.0.zip`, otevřete `JirkaStore.exe`. Lokální sestavení je v `dist/windows/JirkaStore.exe`. Aplikace obsahuje .NET runtime; celou složku držte pohromadě s katalogem.
+- Windows: stáhněte a rozbalte `JirkaStore-Windows-1.1.0.zip`, otevřete `JirkaStore.exe`. Lokálně lze použít `Spustit-Store.cmd`. Zachovejte celý obsah ZIP včetně `engine/`, `catalog/` a `licenses/`; instalační služba obsahuje vlastní .NET runtime.
 - Android: z Releases stáhněte `JirkaStore.apk` (lokálně `dist/android/JirkaStore.apk`) do telefonu a otevřete jej. Povolte instalace z tohoto zdroje, pokud si to Android vyžádá. Při instalaci aplikací ze Storu se stejné oprávnění uděluje Jirka Store.
 - Windows má filtry **PC, ESP32, Home Assistant OS, Android, Web, Ostatní**, hledání a pohledy nainstalovaných aplikací a aktualizací. Android zobrazuje Android aplikace, jejich skutečnou instalovanou verzi a tlačítko Spustit.
+- Windows nabízí mřížku karet i tabulku, světlý/tmavý vzhled, změnu měřítka a hromadnou aktualizaci PC aplikací. Zdroj katalogu a složka aplikací jsou pod ozubeným kolem. Dlouhé názvy a popisy se zalamují; výška karet roste podle obsahu. Tabulka má v úzkém okně vlastní vodorovný posuvník.
 
 Přibalený katalog funguje i bez zveřejnění nového repozitáře. Android balíčky Zephyr a FreeCAD jsou navázané na již existující vydání. Lokální Windows sestavení obsahuje instalační ZIP WiFi Scope, pokud se sestavilo s `-UseLocalCatalog`. U dalších vlastních ESP32 projektů je pravdivě uvedeno **Připravuje se**, dokud nejsou vydané konkrétní firmwary.
 
@@ -27,7 +30,10 @@ PC instalace jsou v `%LOCALAPPDATA%/JirkaStore/apps/<id>/versions/`. Předchozí
 
 ```text
 jirka-store/
-  src/Store.Windows/      Windows launcher
+  launcher/              zdrojový fork ArtCraft Launcheru (Rust/egui)
+    apps/jirka-launcher/ Windows shell a spojení s instalační službou
+    crates/ui-egui/     původní UI knihovna + adaptace jirka.rs
+  src/Store.Host/         instalační služba pro Windows, JSON přes stdin/stdout
   src/Store.Android/      Android launcher
   src/Store.Core/         katalog, ověřování, stahování, PC instalace
   catalog/catalog.json   publikovaný seznam aplikací
@@ -68,7 +74,7 @@ Pro vlastní ESP32 připravte firmware a manifest přes [ESP Web Tools](https://
 
 ## Sestavení a kontrola
 
-Vyžaduje .NET 8 SDK; Android také .NET Android workload, Android SDK 34 / build-tools 34 a JDK 17. Žádné balíčky NuGet třetích stran.
+Windows vyžaduje aktuální stabilní Rust, Visual Studio C++ Build Tools a .NET 8 SDK. Rust závislosti jsou zamčené v `launcher/Cargo.lock`. Android navíc vyžaduje .NET Android workload, Android SDK 34 / build-tools 34 a JDK 17. Instalační jádro nemá balíčky NuGet třetích stran.
 
 ```powershell
 .\build.ps1 -Android -UseLocalCatalog
@@ -76,14 +82,18 @@ Vyžaduje .NET 8 SDK; Android také .NET Android workload, Android SDK 34 / buil
 .\build.ps1
 # regresní testy a skutečné stažení malého APK z GitHubu:
 dotnet run --project tests/Store.Checks -c Release -- catalog/catalog.json --online
+# skutečné rozložení ArtCraft UI, filtry a potvrzení instalace:
+cargo test --manifest-path launcher/Cargo.toml -p artcraft-launcher-ui-egui --test jirka -- --test-threads=1
+# protokol instalační služby v izolovaném profilu:
+python tests/host_check.py
 ```
 
 `build.ps1` přijímá vlastní `-AndroidSdk` a `-JavaSdk`. Android APK se podepisuje vlastním klíčem vytvořeným v `local/signing/`. **Zálohujte celou tuto složku bezpečně mimo Git; bez původního klíče nepůjdou aktualizovat již nainstalované kopie obchodu.** Nejde o Android debug podpis. Heslo se neukládá do zdrojů ani do argumentů procesů jako prostý text.
 
-Windows styl je kompilační kopie vašeho `D:/20_WorkFlow/_Vzor_aplikaci/WorkflowStyle.cs`, takže repozitář funguje i na jiném počítači. Ikona je vlastní vektorový motiv ve stejné barevné rodině.
+Windows rozhraní je odvozené z `storytold/craft-launcher`, revize `6e7a122866591c067344687c45c92f735a1d189b`. Přímo používá jeho `theme.rs`, `widgets.rs`, Archivo, Inter a Geist Mono. Karty a tabulka v `jirka.rs` vycházejí z původního `views.rs`, s dynamickým katalogem a měřením výšky obsahu. Licence MIT/Apache-2.0, autorské údaje a licence fontů jsou zachované v repozitáři i Windows ZIP. Jirka Store používá vlastní název a ikonu.
 
 ## Publikování launcheru
 
 Veřejný repozitář launcherů je `Jirkas-prog/jirka-store`; výchozí katalog je `https://raw.githubusercontent.com/Jirkas-prog/jirka-store/main/catalog/catalog.json`. Nové instalace načítají tuto adresu automaticky, při výpadku mají přibalený katalog. Uživatel může zvolit vlastní HTTPS zdroj, Windows také lokální JSON. Ostatní projekty se zveřejňují jednotlivě; jejich soukromé zdroje launcher nepublikuje. Veřejný katalog je použitelný bez přihlášení; soukromé distribuční zdroje by vyžadovaly doplnění autentizace klientů.
 
-Při novém vydání obchodu zvyšte verze v projektech, u Androidu i `ApplicationVersion`, sestavte, ověřte podpis a nahrajte EXE balíček a APK do nového Release. Veřejné balíčky vytváří `tools/Package-Launchers.ps1` výhradně z EXE, veřejného katalogu a README; lokální aplikační ZIP ani klíče se nepřibalují. Potom aktualizujte katalog, u `jirka-store-android` zejména verzi, `versionCode`, URL a SHA-256. Android tak může aktualizovat i samotný obchod přes systémový instalátor. Novou Windows verzi obchodu rozbalte vedle staré; instalované aplikace zůstanou v profilu uživatele. Automatické přepisování právě běžícího Windows obchodu není implementováno.
+Při novém Windows vydání zvyšte verzi v `launcher/apps/jirka-launcher/Cargo.toml` a `src/Store.Host/Store.Host.csproj`. Veřejný ZIP vytváří `tools/Package-Launchers.ps1` výhradně z launcheru, instalační služby, veřejného katalogu, README a licencí; lokální aplikační ZIP ani klíče se nepřibalují. Android se balí samostatně parametrem `-IncludeAndroid`; před vydáním zvyšte také `ApplicationVersion` a ověřte podpis. Potom aktualizujte katalog s odpovídajícím vydáním, u Androidu včetně `versionCode`, URL a SHA-256. Novou Windows verzi obchodu rozbalte vedle staré; instalované aplikace zůstanou v profilu uživatele. Automatické přepisování právě běžícího Windows obchodu není implementováno.

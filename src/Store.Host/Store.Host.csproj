@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AssemblyName>JirkaStore.Host</AssemblyName>
+    <Version>1.1.0</Version>
+  </PropertyGroup>
+  <ItemGroup><ProjectReference Include="../Store.Core/Store.Core.csproj" /></ItemGroup>
+</Project>

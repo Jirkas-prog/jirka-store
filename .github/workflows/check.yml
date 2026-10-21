@@ -13,7 +13,9 @@ jobs:
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.0.x'
+      - uses: dtolnay/rust-toolchain@stable
       - run: ./build.ps1
+      - run: cargo test --manifest-path launcher/Cargo.toml -p artcraft-launcher-ui-egui --test jirka -- --test-threads=1
       - uses: actions/upload-artifact@v4
         with:
           name: JirkaStore-Windows
